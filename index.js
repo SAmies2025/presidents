@@ -43,7 +43,7 @@ const presidents = [
   { first: "Lyndon", last: "Johnson", year: 1908, passed: 1973 },
   { first: "Richard", last: "Nixon", year: 1913, passed: 1994 },
   { first: "Gerald", last: "Ford", year: 1913, passed: 2006 },
-  { first: "Jimmy", last: "Carter", year: 1924, passed: undefined },
+  { first: "Jimmy", last: "Carter", year: 1924, passed: 2024 },
   { first: "Ronald", last: "Reagan", year: 1911, passed: 2004 },
   { first: "George H.", last: "Bush", year: 1924, passed: 2018 },
   { first: "Bill", last: "Clinton", year: 1946, passed: undefined },
@@ -54,17 +54,65 @@ const presidents = [
 ];
 
 // How many presidents have we had?
+console.log('The total number of presidents is:', presidents.length);
 
-// Create a list of all presidents that are alive.
+// Create a list of all presidents that are alive. 
+console.log('This is a list of living presidents:');
+let living = presidents.filter(function(l) {
+  if (l.passed === undefined) {
+      console.log(l);
+  }
+});
 
 // Create a list of all presidents that have passed away.
+console.log('This is a list of deceased presidents:');
+let deceased = presidents.filter(function(d) {
+  if (d.passed !== undefined) {
+      console.log(d);
+  }
+});
 
 /* 
       - Using a forEach, loop through the presidents and have it console.log() first name, last name, & was XX years old when they died. 
       - We only want the presidents who have passed away to be displayed.
   */
+console.log('This is a list of presidents sorted by age at death: ')
+let sortedByAgePassed = presidents
+.filter(p => p.passed !== undefined)
+.sort((a, b) => (a.passed - a.year) - (b.passed - b.year)); 
+sortedByAgePassed.forEach(p => {
+  let agePassed = p.passed - p.year;
+  console.log(p.first, p.last, 'Age at Death:', agePassed);
+  });
 
 /* 
       - Create an array of the presidents still living.
       - For every living president, calculate their current age.
   */
+ console.log('This is a list of living presidents and their current age: ')
+presidents.forEach(p => {
+  if(p.passed === undefined) {
+    let currentYear = 2025
+    let currentAge = currentYear - p.year;  
+    console.log (p.first , p.last , 'Current Age:' , currentAge);
+    }
+});
+
+//Average Life Span the sum of all dead presidents ages (reduce)/the total number of dead presidents
+let totalLifespan = presidents
+.filter(p => p.passed !== undefined)
+.reduce((total, p) => total + (p.passed - p.year), 0);
+let deceasedCount = presidents.length;
+let aveLifespan = totalLifespan / deceasedCount;
+console.log ('The average lifespan of a president is' , aveLifespan.toFixed(0));
+
+//Longest/Shortest living president
+let oldestPres = presidents
+.filter(p => p.passed !== undefined)
+.sort((a, b) => (b.passed - b.year) - (a.passed - a.year))[0]; 
+console.log(oldestPres.first , oldestPres.last , 'was the longest living president living until age' , oldestPres.passed - oldestPres.year);
+let youngestPres = presidents
+.filter(p => p.passed !== undefined)
+.sort((a, b) => (a.passed - a.year) - (b.passed - b.year))[0]; 
+console.log(oldestPres.first , oldestPres.last , 'was the longest living president living until age' , youngestPres.passed - youngestPres.year);
+//Group presidents by century of birth it took me 7 hours to get this point. I will get back to it if I can afford to
