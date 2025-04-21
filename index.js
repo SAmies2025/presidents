@@ -114,5 +114,16 @@ console.log(oldestPres.first , oldestPres.last , 'was the longest living preside
 let youngestPres = presidents
 .filter(p => p.passed !== undefined)
 .sort((a, b) => (a.passed - a.year) - (b.passed - b.year))[0]; 
-console.log(oldestPres.first , oldestPres.last , 'was the longest living president living until age' , youngestPres.passed - youngestPres.year);
-//Group presidents by century of birth it took me 7 hours to get this point. I will get back to it if I can afford to
+console.log(youngestPres.first , youngestPres.last , 'was the shortest living president living until age' , youngestPres.passed - youngestPres.year);
+
+//Group presidents by century of birth
+let presByCentury = Object.groupBy(presidents,(p)=>{
+  let century = Math.ceil(p.year / 100) + "th Century";
+  return century;
+});
+  for (let century in presByCentury){
+  console.log (century);
+  presByCentury[century].forEach(p => {
+    console.log(p.first , p.last , p.year);
+  });
+}
